@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Admin Dashboard</title>
+
+  <!-- 🔐 Protect Dashboard -->
+  <script>
+    if (localStorage.getItem("isAdminLoggedIn") !== "true") {
+      window.location.href = "index.html";
+    }
+  </script>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f6f8;
+      margin: 0;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #2c3e50;
+      color: white;
+      padding: 15px 30px;
+    }
+
+    header button {
+      padding: 8px 15px;
+      border-radius: 6px;
+      border: none;
+      cursor: pointer;
+      background: #e74c3c;
+      color: white;
+    }
+
+    #stats {
+      padding: 15px 25px;
+      font-size: 18px;
+      font-weight: bold;
+    }
+
+    #loans {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px,1fr));
+      gap: 20px;
+      padding: 20px;
+    }
+
+    .loan-card {
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+
+    .approve-btn {
+      background-color: #4caf50;
+      color: white;
+      border: none;
+      padding: 8px 12px;
+      margin-right: 5px;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    .reject-btn {
+      background-color: #f44336;
+      color: white;
+      border: none;
+      padding: 8px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    .approve-btn:disabled,
+    .reject-btn:disabled {
+      background: gray;
+      cursor: not-allowed;
+    }
+
+    .status-pending { color: orange; font-weight: bold; }
+    .status-approved { color: green; font-weight: bold; }
+    .status-rejected { color: red; font-weight: bold; }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <h1>Admin Dashboard</h1>
+  <button onclick="logout()">Logout</button>
+</header>
+
+<div id="stats">Loading stats...</div>
+<div id="loans"></div>
+
+<script>
+
+async function loadLoans() {
+  try {
+    const res = await fetch('http://localhost:5000/admin/loans');
+    const loans = await res.json();
+
+    // ✅ FIX STATUS COUNT
+    const total = loans.length;
+    const approved = loans.filter(l => l.status === "Approved").length;
+    const rejected = loans.filter(l => l.status === "Rejected").length;
+    const pending = loans.filter(l => l.status === "pending").length;
+    
+
+    document.getElementById('stats').innerHTML =
+      `Total: ${total} | Approved: ${approved} | Rejected: ${rejected} | Pending: ${pending}`;
+
+    // ✅ FIX DATA DISPLAY
+    document.getElementById('loans').innerHTML = loans.map(loan => {
+
+      const isDone = loan.status !== "pending";
+
+      return `
+        <div class="loan-card">
+        <p><strong>User:</strong> ${loan.name ? loan.name : loan.email}</p>
+          <p><strong>Email:</strong> ${loan.email || "-"}</p>
+          <p><strong>Phone:</strong> ${loan.phone || "-"}</p>
+          <p><strong>Amount:</strong> ₹${loan.amount || 0}</p>
+          <p><strong>Type:</strong> ${loan.type || "-"}</p>
+          <p><strong>Eligibility:</strong> ${loan.eligibility}</p>
+
+          <p><strong>Status:</strong> 
+            <span class="status-${loan.status.toLowerCase()}">${loan.status}</span>
+          </p>
+
+          <button class="approve-btn"
+            onclick="updateLoan('${loan._id}','Approved')"
+            ${isDone ? "disabled" : ""}>
+            Approve
+          </button>
+
+          <button class="reject-btn"
+            onclick="updateLoan('${loan._id}','Rejected')"
+            ${isDone ? "disabled" : ""}>
+            Reject
+          </button>
+        </div>
+      `;
+    }).join('');
+
+  } catch (error) {
+    document.getElementById('loans').innerHTML = "⚠️ Failed to load loans";
+  }
+}
+
+// ✅ UPDATE FUNCTION
+async function updateLoan(id, status) {
+  try {
+    await fetch(`http://localhost:5000/admin/loans/${id}`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ status })
+    });
+
+    alert("Status Updated ✅");
+    loadLoans();
+
+  } catch {
+    alert("Update failed ❌");
+  }
+}
+
+// ✅ LOGOUT
+function logout() {
+  localStorage.removeItem("isAdminLoggedIn");
+  window.location.href = "index.html";
+}
+
+// 🚀 LOAD DATA
+loadLoans();
+
+</script>
+
+</body>
+</html>

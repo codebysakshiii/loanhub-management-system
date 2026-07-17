@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Loan Success</title>
+
+<style>
+    body {
+    font-family: 'Segoe UI';
+    background: #eef3f9;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;  /* 🔥 change */
+    min-height: 100vh;        /* 🔥 change */
+    padding: 30px 0;          /* 🔥 space */
+    overflow-y: auto;         /* 🔥 scroll enable */
+}
+.card {
+    margin-bottom: 20px;
+}
+#loan-status {
+    margin-top: 15px;
+}
+
+.card {
+    width: 500px;
+    background: white;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+
+h2 {
+    text-align: center;
+    color: green;
+}
+
+.details {
+    margin-top: 20px;
+    line-height: 1.8;
+    font-size: 14px;
+}
+
+.details span {
+    font-weight: 600;
+    color: #333;
+}
+
+.buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+button {
+    flex: 1;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.download {
+    background: #0f6ed4;
+    color: white;
+}
+
+.home {
+    background: #ccc;
+}
+
+.download:hover {
+    background: #0b4f9c;
+}
+
+
+.apply-btn {
+  width: 100%;
+  padding: 10px;
+  margin-top: 10px;
+  border: none;
+  border-radius: 8px;
+  background: linear-gradient(135deg,#0f6ed4,#0b4f9c);
+  color: white;
+  cursor: pointer;
+  font-weight: 600;
+  transition: 0.3s;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="card">
+
+<h2>✅ Application Submitted Successfully</h2>
+
+<div class="details" id="details"></div>
+
+<div class="buttons">
+    <button class="download" onclick="downloadForm()">Download Receipt</button>
+    <button class="home" onclick="goHome()">Back to Home</button>
+</div>
+
+<div class="card">
+  <h3>🏦 Recommended Banks</h3>
+  <div id="loan-status"></div>
+</div>
+
+</div>
+<script>
+const data = JSON.parse(localStorage.getItem("loanData"));
+
+if(data){
+    document.getElementById("details").innerHTML = `
+        <p><span>Name:</span> ${data.fname || ""} ${data.lname || ""}</p>
+        <p><span>Phone:</span> ${data.phone || ""}</p>
+        <p><span>Email:</span> ${data.email || ""}</p>
+        <p><span>Address:</span> ${data.address || ""}</p>
+        <p><span>PAN:</span> ${data.pan || ""}</p>
+        <p><span>Profession:</span> ${data.profession || ""}</p>
+        <p><span>Loan Amount:</span> ₹${data.amount || ""}</p>
+        <p><span>Loan Type:</span> ${data.type || ""}</p>
+        <p><span>Duration:</span> ${data.duration || ""} months</p>
+    `;
+} else {
+    document.getElementById("details").innerText = "No data found";
+}
+
+// 📄 DOWNLOAD RECEIPT
+function downloadForm(){
+
+    const data = JSON.parse(localStorage.getItem("loanData"));
+
+    const text = `
+-------- Loan Application Receipt --------
+
+Name: ${data.fname || ""} ${data.lname || ""}
+Phone: ${data.phone || ""}
+Email: ${data.email || ""}
+Address: ${data.address || ""}
+PAN: ${data.pan || ""}
+Profession: ${data.profession || ""}
+
+Loan Amount: ₹${data.amount || ""}
+Loan Type: ${data.type || ""}
+Duration: ${data.duration || ""} months
+
+Status: Submitted Successfully
+----------------------------------------
+`;
+
+    const blob = new Blob([text], { type: "text/plain" });
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = "Loan_Receipt.txt";
+    a.click();
+}
+
+// 🔙 BACK HOME
+function goHome(){
+    window.location.href = "/";
+
+
+}
+
+
+function applyBank(link){
+    window.open(link, "_blank");
+}
+
+async function getRecommendation(){
+
+  try{
+    const res = await fetch("/api/loan/recommend", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        salary: 30000,
+        cibil: 750,
+        amount: 100000
+      })
+    });
+
+    const data = await res.json();
+
+    let html = "";
+
+    data.allBanks.forEach(bank => {
+      html += `
+        <div style="margin-top:10px;padding:10px;border:1px solid #ddd;border-radius:8px;">
+          <h4>${bank.name}</h4>
+          <p>Interest: ${bank.interest}%</p>
+          <button onclick="applyBank('${bank.link}')">Apply Now</button>
+        </div>
+      `;
+    });
+
+    document.getElementById("loan-status").innerHTML = html;
+
+  } catch(err){
+    console.log(err);
+  }
+}
+
+getRecommendation();
+</script>
+</body>
+</html>

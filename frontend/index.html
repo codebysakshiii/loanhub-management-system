@@ -1,0 +1,1078 @@
+<!doctype html> 
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Loan Hub — Welcome & Login</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet"> 
+    <style>
+        :root {
+            --accent: #0f6ed4;
+            --accent-2: #0b4f9c;
+            --muted: #6b7280;
+            --bg: #f4f7fb;
+            --card: #ffffff;
+            --glass: rgba(255, 255, 255, 0.65);
+            --shadow: 0 8px 30px rgba(15, 78, 130, 0.12);
+            font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0 }
+        html, body, #app { height: 100% }
+ body {
+    background: var(--bg);
+    color: #0b1220;
+    padding: 0;
+    margin: 0;
+}
+.app {
+    width: 100%;
+    height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 420px;
+}
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 20px;
+}
+
+.panel-footer {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: white;
+    padding: 10px 14px;
+    border-radius: 12px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+    z-index: 999;
+}
+
+.logo {
+    width: 52px;
+    height: 52px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, var(--accent), var(--accent-2));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    color: #fff;
+    font-size: 18px;
+}
+
+.brand h1 {
+    font-size: 20px;
+    margin: 0;
+}
+
+.brand span {
+    font-size: 12px;
+    color: rgba(255,255,255,0.8);
+}
+.hero { position: relative; 
+    padding: 48px 56px;
+     display: flex; flex-direction: column; 
+     gap: 20px; justify-content: center; 
+     background-image: linear-gradient(180deg, rgba(9, 30, 63, 0.15), rgba(9, 30, 63, 0.06)),
+      url('https://i.pinimg.com/1200x/8e/67/a4/8e67a40ea93d94751d98e19055165ef9.jpg');
+       background-size: cover; background-position: center left; color: white; min-height: 520px }
+.hero h2 {
+    font-size: 42px;
+    font-weight: 800;
+    text-shadow: 0 10px 30px rgba(0,0,0,0.6);
+}
+
+.hero p {
+    font-size: 16px;
+    max-width: 500px;
+    color: rgba(255,255,255,0.92);
+}
+
+
+        .cta-row { display: flex; gap: 12px; align-items: center; margin-top: 8px }
+        .btn { padding: 12px 18px; border-radius: 10px; border: 0; cursor: pointer; font-weight: 600 }
+        .btn-primary { background: var(--accent); color: #fff; box-shadow: 0 8px 20px rgba(15,110,212,0.18) }
+        .btn-outline { background: transparent; color: #fff; border: 1px solid rgba(255,255,255,0.22) }
+
+        .features { display: flex; gap: 16px; margin-top: 24px }
+        .feature { background: rgba(255,255,255,0.08); padding: 10px 12px; border-radius: 10px; font-size: 14px }
+
+        .panel { background: var(--card); padding: 28px; border-left: 1px solid rgba(14,22,34,0.04); display: flex; flex-direction: column; gap: 18px; min-height: 520px }
+        .nav { display: flex; gap: 12px; align-items: center; justify-content: flex-end }
+.nav button {
+    position: relative;
+    background: transparent;
+    border: none;
+    padding: 10px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    color: var(--muted);
+    transition: all 0.3s ease;
+}
+
+/* Hover effect */
+.nav button:hover {
+    color: var(--accent);
+    background: rgba(15,110,212,0.08);
+}
+
+/* Active button */
+.nav button.active {
+    color: var(--accent);
+}
+
+/* Underline animation */
+.nav button::after {
+    content: "";
+    position: absolute;
+    left: 10px;
+    bottom: 6px;
+    width: 0%;
+    height: 2px;
+    background: var(--accent);
+    transition: 0.3s;
+}
+
+.nav button:hover::after,
+.nav button.active::after {
+    width: 70%;
+}
+        .nav button.active { color: var(--accent) }
+
+        .card { background: var(--glass); backdrop-filter: blur(6px); padding: 18px; border-radius: 12px; box-shadow: 0 6px 18px rgba(0,0,0,0.06) }
+        form { display: flex; flex-direction: column; gap: 12px }
+        label { font-size: 13px; color: var(--muted) }
+        input, select { padding: 12px; border-radius: 10px; border: 1px solid #e6e9ef; font-size: 15px }
+        .row { display: flex; gap: 10px }
+        .small { font-size: 13px; color: var(--muted) }
+        .divider { height: 1px; background: linear-gradient(90deg, transparent, #eaeff6, transparent); margin: 6px 0; border-radius: 2px }
+        .panel-footer { display: flex; justify-content: space-between; align-items: center; margin-top: auto; font-size: 13px; color: var(--muted); padding: 10px 20px }
+
+        .home-welcome { display: flex; flex-direction: column; gap: 12px }
+        .cards { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-top: 10px }
+        .overview-card { padding: 14px; border-radius: 12px; background: #fff; border: 1px solid #eef2f7 }
+        .loan-box { display: flex; gap: 10px; margin-top: 15px }
+        .loan-box input { flex: 1 }
+
+
+        #nav-profile {
+    background: var(--accent);
+    color: white;
+    border-radius: 8px;
+    padding: 8px 14px;
+}
+
+#nav-profile:hover {
+    background: var(--accent-2);
+}
+       @media (max-width: 768px) {
+
+    .hero {
+        padding: 30px;
+        align-items: center;
+        text-align: center;
+    }
+
+    .brand {
+        justify-content: center;
+    }
+
+    .hero h2 {
+        font-size: 28px;
+    }
+
+    .hero p {
+        font-size: 14px;
+    }
+
+    #nav-login {
+    background: var(--accent);
+    color: white;
+    border-radius: 8px;
+    padding: 8px 14px;
+}
+
+#nav-login:hover {
+    background: var(--accent-2);
+    color: white;
+}
+
+
+.card{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+    margin-top: 25px;
+}
+
+.overview-card{
+    background: #fff;
+    padding: 18px;
+    border-radius: 12px;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+    transition: 0.3s;
+}
+
+.overview-card{
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.12);
+}
+
+.overview-card{
+    margin-bottom: 8px;
+    color: #0f6ed4;
+    font-size: 16px;
+}
+
+.overview-card p{
+    font-size: 13px;
+    color: #555;
+}
+}
+
+
+.modern-login{
+    max-width: 420px;
+    margin: auto;
+    border-radius: 18px;
+    padding: 30px;
+    background: #fff;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.12);
+    animation: fadeIn 0.5s ease;
+}
+
+.login-header{
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.login-icon{
+    font-size: 40px;
+    margin-bottom: 10px;
+}
+
+.login-header h2{
+    margin: 0;
+    font-size: 24px;
+}
+
+.login-header p{
+    font-size: 13px;
+    color: #666;
+}
+
+.modern-login input{
+    width: 100%;
+    padding: 12px 14px;
+    border-radius: 10px;
+    border: 1px solid #ddd;
+    outline: none;
+    transition: 0.3s;
+}
+
+.modern-login input:focus{
+    border-color: #0f6ed4;
+    box-shadow: 0 0 0 3px rgba(15,110,212,0.15);
+}
+
+.login-meta{
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    margin: 10px 0;
+    color: #666;
+}
+
+.login-meta a{
+    color: #0f6ed4;
+    text-decoration: none;
+}
+
+.btn-primary-modern{
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 10px;
+    background: linear-gradient(135deg,#0f6ed4,#0b4f9c);
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: 0.3s;
+}
+
+.btn-primary-modern:hover{
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(15,110,212,0.25);
+}
+
+.btn-secondary-modern{
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    background: white;
+    border-radius: 10px;
+    margin-top: 10px;
+    cursor: pointer;
+}
+
+.divider-text{
+    text-align: center;
+    margin: 15px 0;
+    font-size: 12px;
+    color: #aaa;
+}
+
+.social-row{
+    display: flex;
+    gap: 10px;
+}
+
+.social-row button{
+    flex: 1;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    background: #f9f9f9;
+    cursor: pointer;
+}
+
+@keyframes fadeIn{
+    from{opacity:0; transform:translateY(10px);}
+    to{opacity:1; transform:translateY(0);}
+}
+
+
+.modern-signup{
+    max-width: 450px;
+    margin: auto;
+    padding: 30px;
+    border-radius: 18px;
+    background: #fff;
+    box-shadow: 0 25px 70px rgba(0,0,0,0.12);
+    animation: fadeIn 0.5s ease;
+}
+
+.signup-header{
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.signup-icon{
+    font-size: 40px;
+    margin-bottom: 10px;
+}
+
+.signup-header h2{
+    margin: 0;
+    font-size: 24px;
+}
+
+.signup-header p{
+    font-size: 13px;
+    color: #666;
+}
+
+.modern-signup input{
+    width: 100%;
+    padding: 12px 14px;
+    border-radius: 10px;
+    border: 1px solid #ddd;
+    outline: none;
+    transition: 0.3s;
+    margin-bottom: 10px;
+}
+
+.modern-signup input:focus{
+    border-color: #0f6ed4;
+    box-shadow: 0 0 0 3px rgba(15,110,212,0.15);
+}
+
+.grid-2{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+.terms {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 10px 0 20px;
+    font-size: 14px;
+    color: #555;
+}
+
+.terms input[type="checkbox"]{
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+}
+
+.terms label{
+    line-height: 1.4;
+}
+
+.terms a{
+    color: #1e73ff;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.btn-signup-modern{
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 10px;
+    background: linear-gradient(135deg,#0f6ed4,#0b4f9c);
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.btn-signup-modern:hover{
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(15,110,212,0.25);
+}
+
+.btn-login-link{
+    width: 100%;
+    margin-top: 10px;
+    padding: 10px;
+    border: none;
+    background: transparent;
+    color: #0f6ed4;
+    cursor: pointer;
+    font-weight: 500;
+}
+
+.btn-login-link:hover{
+    text-decoration: underline;
+}
+
+@keyframes fadeIn{
+    from{opacity:0; transform:translateY(10px);}
+    to{opacity:1; transform:translateY(0);}
+}
+
+
+
+.bank-title {
+    margin-top: 25px;
+    margin-bottom: 10px;
+    font-size: 20px;
+    color: #0f6ed4;
+}
+
+.bank-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 16px;
+    margin-top: 10px;
+}
+
+.bank-card {
+    background: white;
+    padding: 18px;
+    border-radius: 14px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+    transition: 0.3s;
+    position: relative;
+}
+
+.bank-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 12px 28px rgba(0,0,0,0.15);
+}
+
+.bank-card h4 {
+    color: #0f6ed4;
+    margin-bottom: 8px;
+}
+
+.bank-card p {
+    font-size: 14px;
+    color: #555;
+    margin: 4px 0;
+}
+
+.bank-card button {
+    margin-top: 12px;
+    padding: 10px;
+    width: 100%;
+    border: none;
+    border-radius: 8px;
+    background: linear-gradient(135deg, #0f6ed4, #0b4f9c);
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.bank-card button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 18px rgba(15,110,212,0.3);
+}
+
+.apply-btn {
+  width: 100%;
+  padding: 10px;
+  margin-top: 10px;
+  border: none;
+  border-radius: 8px;
+  background: linear-gradient(135deg,#0f6ed4,#0b4f9c);
+  color: white;
+  cursor: pointer;
+  font-weight: 600;
+  transition: 0.3s;
+}
+
+.apply-btn:hover {
+  transform: scale(1.05);
+}
+.apply-btn{
+display:inline-block;
+padding:10px 18px;
+background:#0f6ed4;
+color:white;
+text-decoration:none;
+border-radius:8px;
+margin-top:10px;
+cursor:pointer;
+}
+
+.apply-btn:hover{
+background:#0b4f9c;
+}
+
+/* REMEMBER ME FIX */
+.login-meta{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-top:12px;
+    font-size:13px;
+    color:#666;
+}
+
+/* checkbox + text same line */
+.login-meta label{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    cursor:pointer;
+    color:#555;
+}
+
+/* checkbox normal size */
+.login-meta input[type="checkbox"]{
+    width:16px;
+    height:16px;
+    accent-color:#0f6ed4;
+    cursor:pointer;
+}
+
+/* forgot password */
+.login-meta a{
+    text-decoration:none;
+    color:#0f6ed4;
+    font-weight:500;
+}
+
+.login-meta a:hover{
+    text-decoration:underline;
+}
+
+
+
+
+</style>
+</head>
+
+<body>
+    <div id="app" class="app">
+        <!-- LEFT: Hero / Welcome -->
+        <section class="hero">
+            <div class="brand">
+                <div class="logo">LH</div>
+                <div>
+                    <h1 style="font-weight:700">Loan Hub</h1>
+                    <div style="font-size:13px;color:rgba(255,255,255,0.8)">Smart. Fast. Trusted.</div>
+                </div>
+            </div>
+            <h2>Welcome to Loan Hub — Your path to smart financing</h2>
+            <p>Loan Hub helps you find, apply and manage loans quickly and securely. We simplify the process, show clear options, and guide you every step of the way so you can make confident financial decisions.</p>
+
+            <div class="cta-row">
+                <button class="btn btn-primary" onclick="navigateTo('signup')">Get Started</button>
+                <button class="btn btn-outline" onclick="navigateTo('login')">Login</button>
+            
+
+
+                <button class="btn btn-outline" onclick="showView('emi')">
+  EMI Calculator
+</button>
+
+       <button class="profile-btn" onclick="openProfile()" id="profileBtn">
+  <span class="avatar">👤</span>
+  <span>My Profile</span>
+</button>
+
+
+            </div>
+
+
+            <div class="features">
+                <div class="feature">Instant pre-qualification</div>
+                <div class="feature">Transparent rates</div>
+                <div class="feature">Secure documents</div>
+            </div>
+        </section>
+
+        <!-- RIGHT: Panel -->
+        <aside class="panel">
+            <div class="nav">
+                <button id="nav-home" class="active" onclick="showView('home')">Home</button>
+                <button id="nav-help" onclick="showHelp()">Help</button>
+                <button id="nav-login" onclick="showView('login')">Login</button>
+                <button id="nav-admin" onclick="showView('admin-login')">Admin</button>
+            
+               
+                
+
+              <button id="nav-dashboard" onclick="showView('dashboard')" style="display:none;">
+              Dashboard
+               </button>
+               <button id="nav-logout" onclick="logout()" style="display:none;">
+    Logout
+               </button>
+
+            </div>
+
+            <div id="content">
+                <!-- HOME -->
+                <div id="view-home" class="view">
+                    <div class="home-welcome">
+                        <div style="display:flex;justify-content:space-between;gap:12px">
+                            <div>
+                                <h3>Hello — welcome back</h3>
+                                <div class="small">Manage your loans, track applications and check offers.</div>
+                            </div>
+                            <div><button class="btn btn-primary" onclick="navigateTo('signup')">Apply for Loan</button></div>
+                        </div>
+                        <div class="cards">
+                            <div class="overview-card">
+                                <strong>Active Applications</strong>
+                                <div class="small">You have 2 applications in progress</div>
+                            </div>
+                            <div class="overview-card">
+                                <strong>Quick Actions</strong>
+                                <div class="small">Upload details · Contact support · View offers</div>
+                            </div>
+
+                            <div class="overview-card">
+        <h3>⚡ Instant Approval</h3>
+        <p>Get loan approval in minutes with smart verification system.</p>
+    </div>
+
+    <div class="overview-card">
+        <h3>🔒 Secure Process</h3>
+        <p>Your data is fully encrypted and protected at every step.</p>
+    </div>
+                        </div>
+                        
+                    </div>
+                </div>
+
+
+                <!-- EMI CALCULATOR -->
+<div id="view-emi" class="view" style="display:none">
+  <div class="card">
+    <h3>📊 EMI Calculator</h3>
+
+    <label>Loan Amount</label>
+    <input id="amount" type="number" placeholder="Enter amount">
+
+    <label>Interest Rate (%)</label>
+    <input id="rate" type="number" placeholder="Enter interest">
+
+    <label>Time (Years)</label>
+    <input id="time" type="number" placeholder="Enter years">
+
+    <button class="btn btn-primary" onclick="calculateEMI()">
+      Calculate EMI
+    </button>
+
+    <h4 id="result" style="margin-top:10px;"></h4>
+  </div>
+</div>
+                <!-- LOGIN -->
+                <div id="view-login" class="view" style="display:none">
+    <div class="card modern-login">
+
+        <div class="login-header">
+            <div class="login-icon">🔐</div>
+            <h2>Welcome Back</h2>
+            <p>Login to continue your Loan Hub journey</p>
+        </div>
+
+        <form onsubmit="event.preventDefault(); handleLogin()">
+
+            <label>Email</label>
+            <input id="login-email" type="email" required placeholder="Enter your email">
+
+            <label>Password</label>
+            <input id="login-pass" type="password" required placeholder="Enter password">
+
+           <div class="login-meta">
+
+<label>
+<input type="checkbox">
+Remember me
+</label>
+
+<a href="#">Forgot password?</a>
+
+</div>
+
+            <button class="btn-primary-modern" type="submit">
+                Login →
+            </button>
+
+            <button class="btn-secondary-modern" type="button" onclick="showView('signup')">
+                Create New Account
+            </button>
+
+            <div class="divider-text">or continue with</div>
+
+            <div class="social-row">
+                <button type="button">Google</button>
+                <button type="button">OTP</button>
+            </div>
+
+        </form>
+
+    </div>
+</div>
+
+                <!-- SIGNUP -->
+                <div id="view-signup" class="view" style="display:none">
+
+    <div class="card modern-signup">
+
+        <div class="signup-header">
+            <div class="signup-icon">🚀</div>
+            <h2>Create Account</h2>
+            <p>Join Loan Hub in just a few seconds</p>
+        </div>
+
+        <form onsubmit="event.preventDefault(); handleSignup()">
+
+            <div class="grid-2">
+                <div>
+                    <label>Full Name</label>
+                    <input id="full-name" type="text" required placeholder="John Doe">
+                </div>
+
+                <div>
+                    <label>Email</label>
+                    <input id="signup-email" type="email" required placeholder="you@example.com">
+                </div>
+            </div>
+
+            <div class="grid-2">
+                <div>
+                    <label>Phone</label>
+                    <input id="phone" type="tel" placeholder="+91 9876543210">
+                </div>
+
+                <div>
+                    <label>Monthly Income</label>
+                    <input id="income" type="text" placeholder="₹ 40,000">
+                </div>
+            </div>
+
+            <label>Password</label>
+            <input id="signup-pass" type="password" required placeholder="Create strong password">
+
+            <label>Confirm Password</label>
+            <input type="password" required placeholder="Re-enter password">
+ <div class="terms">
+    <input type="checkbox" id="terms">
+
+    <label for="terms">
+        I agree to the
+        <a href="#">Terms & Conditions</a>
+    </label>
+</div>
+            <button class="btn-signup-modern" type="submit">
+                Create Account →
+            </button>
+
+            <button class="btn-login-link" type="button" onclick="showView('login')">
+                Already have an account? Login
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
+
+                <!-- ADMIN LOGIN -->
+                <div id="admin-login-section" class="view" style="display:none">
+                    <div class="card">
+                        <h3>Admin Login</h3>
+                        <form onsubmit="event.preventDefault(); handleAdminLogin()">
+                            <label>Username</label>
+                            <input id="admin-username" type="text" required placeholder="admin">
+                            <label>Password</label>
+                            <input id="admin-pass" type="password" required placeholder="••••••">
+                            <div style="margin-top:10px;">
+                                <button class="btn btn-primary" type="submit">Login</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+</div>
+
+
+
+</div>
+         <div class="panel-footer">
+                <div class="small">Need help? <a href="#" onclick="showHelp()">Contact support</a></div>
+                <div style="display:flex;gap:8px">
+                    <button class="btn" onclick="openDocs()">Help</button>
+                    <button class="btn" onclick="openDocs()">Privacy</button>
+                </div>
+            </div>
+        </aside>
+    </div>
+
+    <script>
+        function hideAll() {
+            document.querySelectorAll('.view').forEach(v => v.style.display = 'none');
+            document.querySelectorAll('.nav button').forEach(b => b.classList.remove('active'));
+        }
+
+        function showView(name) {
+            hideAll();
+            if(name==='home') document.getElementById('view-home').style.display='block';
+            else if(name==='login') document.getElementById('view-login').style.display='block';
+            else if(name==='signup') document.getElementById('view-signup').style.display='block';
+            else if(name==='admin-login') document.getElementById('admin-login-section').style.display='block';
+             else if(name==='emi') document.getElementById('view-emi').style.display='block';
+            
+
+
+              //active//
+            if(name==='home') document.getElementById('nav-home').classList.add('active');
+            else if(name==='login') document.getElementById('nav-login').classList.add('active');
+            else if(name==='admin-login') document.getElementById('nav-admin').classList.add('active');
+            else if(name==='emi') document.getElementById('nav-emi').classList.add('active');
+        }
+
+        function navigateTo(page){
+            if(page==='signup') showView('signup');
+            if(page==='login') showView('login');
+        }
+
+        function showHelp(){ alert('For help, contact support@loanhub.example (demo).'); }
+        function openDocs(){ alert('Documentation is not available in demo.'); }
+
+
+        function openProfile(){
+    window.location.href = "profile.html";
+}
+
+        async function handleLogin(){
+            const email=document.getElementById('login-email').value;
+            const password=document.getElementById('login-pass').value;
+
+            const res=await fetch("http://localhost:5000/api/auth/login",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({email,password})});
+            const data=await res.json();
+
+            if(data.token){
+
+
+           localStorage.setItem("token",data.token); 
+            alert("Login successful");
+
+             window.location.href = "/apply.html"; 
+
+
+          document.getElementById("nav-logout").style.display = "inline-block";
+
+         }
+            else {
+         alert(data.msg);
+          }
+        if(data.token){ 
+    localStorage.setItem("token", data.token); 
+    alert("Login successful");
+
+    // ✅ Show profile button
+    document.getElementById("nav-profile").style.display = "inline-block";
+
+    // ❌ optional: login button hide karo
+    document.getElementById("nav-login").style.display = "none";
+
+
+}
+        
+        }
+
+          async function handleSignup(){
+            const name=document.getElementById('full-name').value;
+            const email=document.getElementById('signup-email').value;
+            const password=document.getElementById('signup-pass').value;
+            const res=await fetch("http://localhost:5000/api/auth/signup",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({name,email,password})});
+            const data=await res.json();
+            alert(data.msg); showView('login');
+        }
+
+        async function applyLoan(){
+            const amount=document.getElementById('loan-amount').value;
+            const token=localStorage.getItem("token");
+            const res=await fetch("http://localhost:5000/api/loan/apply",{method:"POST",headers:{"Content-Type":"application/json","Authorization":token},body:JSON.stringify({amount})});
+            const data=await res.json();
+            alert(data.msg);
+        }
+
+        function logout(){
+  localStorage.removeItem("token");
+  document.getElementById("nav-dashboard").style.display = "none";
+  document.getElementById("nav-logout").style.display = "none";
+  showView('home');
+}
+
+        async function handleAdminLogin(){
+            const username=document.getElementById('admin-username').value;
+            const password=document.getElementById('admin-pass').value;
+            const res=await fetch('http://localhost:5000/admin/login',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({username,password})});
+            const data=await res.json();
+           if(data.success){
+
+
+            localStorage.setItem("isAdminLoggedIn", "true");
+            window.location.href = "admin/admin-dashboard.html"; // ✅ correct
+}
+            else alert('Invalid admin credentials');
+        }
+
+        // Start on home
+        showView('home');
+    </script>
+    <script>
+      function calculateEMI(){
+        let P = document.getElementById("amount").value;
+       let R = document.getElementById("rate").value / 12 / 100;
+        let N = document.getElementById("time").value * 12;
+
+       if(P && R && N){
+       let EMI = (P * R * Math.pow(1+R,N)) / (Math.pow(1+R,N)-1);
+       document.getElementById("result").innerText = "Monthly EMI: ₹ " + EMI.toFixed(2);
+       } else {
+         alert("Please fill all fields");
+        }
+    }
+        window.onload = function(){
+       const token = localStorage.getItem("token");
+
+       if(token){
+      document.getElementById("nav-dashboard").style.display = "inline-block";
+        document.getElementById("nav-logout").style.display = "inline-block";
+      }
+     }
+     window.onload = function(){
+    const token = localStorage.getItem("token");
+
+    if(token){
+        document.getElementById("nav-profile").style.display = "inline-block";
+        document.getElementById("nav-login").style.display = "none";
+    }
+}
+
+
+<script>
+
+// ✅ Apply Loan
+async function applyLoan(){
+
+
+  const type = document.getElementById("loan-type").value;
+  const amount = document.getElementById("loan-amount").value;
+  const duration = document.getElementById("loan-duration").value;
+
+  const token = localStorage.getItem("token");
+
+  const res = await fetch("http://localhost:5000/api/loan/apply", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": token
+    },
+    body: JSON.stringify({ type, amount, duration })
+  });
+
+  const data = await res.json();
+
+  alert(data.msg); // ✅ "Loan Applied Successfully"
+
+  // optional refresh
+  getRecommendation();
+}
+</script>
+<script>
+// ✅ Bank Recommendation
+async function getRecommendation(){
+
+  const salary = document.getElementById("income")?.value || 30000;
+  const cibil = document.getElementById("cibil")?.value || 750;
+  const amount = document.getElementById("amount")?.value || 100000;
+
+  const res = await fetch("http://localhost:5000/api/loan/recommend", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({ salary, cibil, amount })
+  });
+
+  const data = await res.json();
+
+  let html = `
+    <h3 class="bank-title">🏦 Recommended Banks</h3>
+    <div class="bank-container">
+  `;
+
+  
+data.allBanks.forEach(bank => {
+  html += `
+    <div class="bank-card">
+      <h4>${bank.name}</h4>
+      <p>💰 Interest: ${bank.interest}%</p>
+      <p>📊 Approval: ${bank.approval}%</p>
+
+      <a href="${bank.link}" target="_blank" class="apply-btn">
+        Apply Now
+      </a>
+
+    </div>
+  `;
+});
+  html += `</div>`;
+
+  document.getElementById("loan-status").innerHTML = html;
+}
+
+
+</script>
+</body>
+</html> 
