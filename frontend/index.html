@@ -875,7 +875,7 @@ Remember me
             if(name==='home') document.getElementById('nav-home').classList.add('active');
             else if(name==='login') document.getElementById('nav-login').classList.add('active');
             else if(name==='admin-login') document.getElementById('nav-admin').classList.add('active');
-            else if(name==='emi') document.getElementById('nav-emi').classList.add('active');
+            else if(name==='emi') {}
         }
 
         function navigateTo(page){
@@ -895,7 +895,7 @@ Remember me
             const email=document.getElementById('login-email').value;
             const password=document.getElementById('login-pass').value;
 
-            const res=await fetch("http://localhost:5000/api/auth/login",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({email,password})});
+            const res=await fetch("https://loanhub-management-system.onrender.com/api/auth/login",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({email,password})});
             const data=await res.json();
 
             if(data.token){
@@ -932,7 +932,7 @@ Remember me
             const name=document.getElementById('full-name').value;
             const email=document.getElementById('signup-email').value;
             const password=document.getElementById('signup-pass').value;
-            const res=await fetch("http://localhost:5000/api/auth/signup",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({name,email,password})});
+            const res=await fetch("https://loanhub-management-system.onrender.com/api/auth/signup",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({name,email,password})});
             const data=await res.json();
             alert(data.msg); showView('login');
         }
@@ -940,7 +940,7 @@ Remember me
         async function applyLoan(){
             const amount=document.getElementById('loan-amount').value;
             const token=localStorage.getItem("token");
-            const res=await fetch("http://localhost:5000/api/loan/apply",{method:"POST",headers:{"Content-Type":"application/json","Authorization":token},body:JSON.stringify({amount})});
+            const res=await fetch("https://loanhub-management-system.onrender.com/api/loan/apply",{method:"POST",headers:{"Content-Type":"application/json","Authorization":token},body:JSON.stringify({amount})});
             const data=await res.json();
             alert(data.msg);
         }
@@ -955,7 +955,7 @@ Remember me
         async function handleAdminLogin(){
             const username=document.getElementById('admin-username').value;
             const password=document.getElementById('admin-pass').value;
-            const res=await fetch('http://localhost:5000/admin/login',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({username,password})});
+            const res=await fetch('https://loanhub-management-system.onrender.com/admin/login',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({username,password})});
             const data=await res.json();
            if(data.success){
 
@@ -1012,7 +1012,7 @@ async function applyLoan(){
 
   const token = localStorage.getItem("token");
 
-  const res = await fetch("http://localhost:5000/api/loan/apply", {
+  const res = await fetch("https://loanhub-management-system.onrender.com/api/loan/apply",{
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -1037,7 +1037,7 @@ async function getRecommendation(){
   const cibil = document.getElementById("cibil")?.value || 750;
   const amount = document.getElementById("amount")?.value || 100000;
 
-  const res = await fetch("http://localhost:5000/api/loan/recommend", {
+  const res = await fetch("https://loanhub-management-system.onrender.com/api/loan/recommend",{
     method: "POST",
     headers: {
       "Content-Type": "application/json"
