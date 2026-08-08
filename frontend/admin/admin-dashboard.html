@@ -101,7 +101,7 @@
 
 async function loadLoans() {
   try {
-    const res = await fetch('http://localhost:5000/admin/loans');
+    const res = await fetch('https://loanhub-management-system.onrender.com/admin/loans');
     const loans = await res.json();
 
     // ✅ FIX STATUS COUNT
@@ -155,7 +155,7 @@ async function loadLoans() {
 // ✅ UPDATE FUNCTION
 async function updateLoan(id, status) {
   try {
-    await fetch(`http://localhost:5000/admin/loans/${id}`, {
+    await fetch(`https://loanhub-management-system.onrender.com/admin/loans/${id}`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ status })
