@@ -173,7 +173,7 @@ function applyBank(link){
 async function getRecommendation(){
 
   try{
-    const res = await fetch("/api/loan/recommend", {
+    const res = await fetch("https://loanhub-management-system.onrender.com/api/loan/recommend",{
       method: "POST",
       headers: {
         "Content-Type": "application/json"
